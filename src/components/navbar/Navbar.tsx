@@ -176,7 +176,7 @@ const Navbar = () => {
       >
         <div
           className={`max-w-7xl  
-    border-white/20 mx-auto flex justify-between items-center p-3 ${
+    border-white/20 mx-auto flex transition-opacity duration-500 justify-between items-center p-3 ${
       isDropdownOpen ? ' opacity-100 border-t-[0.5px]' : ' opacity-0 border-0'
     }`}
         >
