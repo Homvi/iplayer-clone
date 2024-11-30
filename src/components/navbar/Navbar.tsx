@@ -167,11 +167,11 @@ const Navbar = () => {
         className={`
     w-full
     bg-black/80
-    transition-height
+    transition-all
     duration-100
     overflow-hidden
     ease-in
-    ${isDropdownOpen ? ' h-20 translate-y-0 ' : ' h-0 -translate-y-5 border-none'}
+    ${isDropdownOpen ? ' h-20 translate-y-0 opacity-100 ' : ' h-0 -translate-y-5 border-none opacity-0'}
   `}
       >
         <div
