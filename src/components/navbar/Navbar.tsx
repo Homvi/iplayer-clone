@@ -58,6 +58,7 @@ const Navbar = () => {
   );
 
   const navbarRef = useRef<HTMLUListElement>(null);
+  const threeDotsRef = useRef<HTMLButtonElement>(null);
   const [visibleItems, setVisibleItems] = useState(navMenuElements);
   const [overflowItems, setOverflowItems] = useState<typeof navMenuElements>(overflowNavMenuElement);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,6 +66,12 @@ const Navbar = () => {
   function toggleExtraLineOfMenus(): void {
     setIsDropdownOpen((prev) => !prev);
   }
+
+  useEffect(() => {
+    if (!isDropdownOpen) {
+      threeDotsRef.current?.focus();
+    }
+  }, [isDropdownOpen]);
 
   useEffect(() => {
     function handleDynamicNavMenuItems() {
@@ -134,11 +141,15 @@ const Navbar = () => {
             ))}
           </div>
 
-          <button onClick={toggleExtraLineOfMenus} className="flex flex-col group mx-3 cursor-pointer mr-6">
-            <div className="flex h-full font-semibold py-3 items-center">
+          <button
+            ref={threeDotsRef}
+            onClick={toggleExtraLineOfMenus}
+            className="flex flex-col group mx-3 cursor-pointer mr-6"
+          >
+            <div className="flex h-full font-semibold py-3 items-center bg">
               <Ellipsis size={35} />
             </div>
-            <div className="h-[2px] flex w-5 opacity-0 bg-white group-hover:w-full group-hover:opacity-100 transition-all duration-300"></div>
+            <div className="h-[2px] flex w-5 opacity-0 bg-white group-hover:w-full group-hover:opacity-100 group-focus:opacity-100  group-focus:w-full transition-all duration-300"></div>
           </button>
           {/* search */}
           <button
@@ -156,17 +167,18 @@ const Navbar = () => {
         className={`
     w-full
     bg-black/80
-    backdrop-blur-sm
+    transition-height
+    duration-100
     overflow-hidden
-    transition-all
-    duration-300
-    ease-linear
-    ${isDropdownOpen ? 'h-fit opacity-100 translate-y-0' : 'max-h-0 opacity-0 -translate-y-3'}
+    ease-in
+    ${isDropdownOpen ? ' h-20 translate-y-0 ' : ' h-0 -translate-y-5 border-none'}
   `}
       >
         <div
-          className="max-w-7xl  border-t-[0.5px]
-    border-white/20 mx-auto flex justify-between items-center p-3"
+          className={`max-w-7xl  
+    border-white/20 mx-auto flex justify-between items-center p-3 ${
+      isDropdownOpen ? ' opacity-100 border-t-[0.5px]' : ' opacity-0 border-0'
+    }`}
         >
           <div className="flex flex-wrap">
             {overflowItems.map((element) => (
