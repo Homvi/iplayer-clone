@@ -3,6 +3,7 @@ import Logo from './Logo';
 import NavMenuElement from './NavMenuElement';
 import SignInButton from './SignInButton';
 import { useEffect, useRef, useState, useMemo } from 'react';
+import IPlayerLogo from './IPlayerLogo';
 
 const Navbar = () => {
   const navMenuElements = useMemo(
@@ -189,6 +190,18 @@ const Navbar = () => {
           <button onClick={toggleExtraLineOfMenus} className="ml-4 mr-3">
             <X size={30} className="cursor-pointer" />
           </button>
+        </div>
+      </div>
+      <div className=" border-t-[0.5px] border-white/20">
+        <div className="max-w-7xl mx-auto py-6 flex justify-between items-center px-3">
+          <IPlayerLogo className="fill-pink-600 h-7 hover:fill-white transition-colors duration-300 cursor-pointer " />
+          <ul className="flex gap-6">
+            <li className="cursor-pointer hover:text-pink-600 text-white transition-colors duration-300">Channels</li>
+            <li className="cursor-pointer hover:text-pink-600 text-white transition-colors duration-300">Categories</li>
+            <li className="cursor-pointer hover:text-pink-600 text-white transition-colors duration-300">A-Z</li>
+            <li className="cursor-pointer hover:text-pink-600 text-white transition-colors duration-300">TV Guide</li>
+            <li className="cursor-pointer hover:text-pink-600 text-white transition-colors duration-300">Wachlist</li>
+          </ul>
         </div>
       </div>
     </nav>
