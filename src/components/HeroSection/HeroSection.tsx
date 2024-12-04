@@ -109,7 +109,7 @@ const HeroSection = () => {
                 <div className="flex flex-col" key={movie.title} onClick={() => handleThumbnailClick(index)}>
                   <div
                     className={`h-32 aspect-video transition-all duration-300 cursor-pointer border-2 ${
-                      activeImageIndex === index ? 'scale-110 border-white' : 'scale-100 border-transparent'
+                      activeImageIndex === index ? 'scale-110 border-white opacity-100' : 'scale-100 border-transparent opacity-60'
                     }`}
                   >
                     <img src={movie.thumbnail} alt={movie.title} className="h-full w-full object-cover" />
