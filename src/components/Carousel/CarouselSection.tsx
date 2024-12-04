@@ -4,8 +4,8 @@ import { ChevronRight } from 'lucide-react';
 
 const CarouselSection = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [translateX, setTranslateX] = useState(0);
-  const moviesPerPage = 4;
+  const [translateX, setTranslateX] = useState<number>(0);
+  const moviesPerPage: number = 4;
   const [indexOfVisibleMovies, setIndexOfVisibleMovies] = useState<number[]>([0, 1, 2, 3]);
 
   /* TODO: darken uncentralised images */
