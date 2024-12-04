@@ -1,7 +1,7 @@
 const IPlayerLogo = ({ className }: { className?: string }) => {
   return (
     <svg
-      className={`text-red-200 fill-white ${className || ''}`}
+      className={` fill-white ${className || ''}`}
       version="1"
       viewBox="0 0 605 107"
       xmlns="http://www.w3.org/2000/svg"
