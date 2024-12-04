@@ -60,8 +60,8 @@ const HeroSection = () => {
     <div className="border-t-[0.5px] border-white/30">
       <section className="max-w-7xl mx-auto px-3  relative w-full aspect-video">
         <div className="flex h-full flex-col justify-end">
-          <div className="flex flex-col gap-3 z-20 max-w-sm">
-            <h1 className="text-2xl font-bold max-w-xs z-10 relative">{activeMovie.title}</h1>
+          <div className="flex flex-col gap-3 z-[11] max-w-sm relative">
+            <h1 className="text-2xl font-bold max-w-xs relative">{activeMovie.title}</h1>
             <p className="text-gray-300">{activeMovie.description}</p>
             <p className="text-lg font bold">{activeMovie.isSeries ? activeMovie.updateFrequency : ''}</p>
             {/* button container */}
@@ -91,7 +91,7 @@ const HeroSection = () => {
           <div className="z-10 absolute w-full h-full bg-gradient-to-r from-black from-20% via-transparent to-black"></div>
           {/* cover image */}
           <div className="h-fit w-5/6 absolute right-0 top-0">
-            <div className="bg-black/90 h-full w-full z-20">
+            <div className="bg-black/90 h-full w-full z-10">
               <img
                 className="w-full absolute right-0 top-0 aspect-video"
                 src={activeMovie.image}
