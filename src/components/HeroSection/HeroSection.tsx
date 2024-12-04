@@ -1,11 +1,62 @@
 // src/components/HeroSection/HeroSection.js
 import { Film, Popcorn } from 'lucide-react';
 import { movies } from './movieData';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+
+const SLIDE_DURATION = 8000; // 8 seconds
 
 const HeroSection = () => {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [progressBarLength, setProgressBarLength] = useState<number>(0);
+  const [isAutoRolling, setIsAutoRolling] = useState<boolean>(true);
+
+  /* TODO: Add movie type/interface */
   const activeMovie = movies[activeImageIndex];
+
+  const advanceSlide = useCallback(() => {
+    if (isAutoRolling) {
+      setActiveImageIndex((prev) => (prev + 1) % movies.length);
+    }
+  }, [isAutoRolling]);
+
+  useEffect(() => {
+    // Immediately reset progress bar when active image changes
+    setProgressBarLength(0);
+
+    // If not auto-rolling, don't start the timer
+    if (!isAutoRolling) return;
+
+    const startTime = Date.now();
+    let animationFrameId: number;
+
+    const updateProgressBar = () => {
+      const elapsedTime = Date.now() - startTime;
+      const progress = Math.min((elapsedTime / SLIDE_DURATION) * 100, 100);
+
+      setProgressBarLength(progress);
+
+      if (elapsedTime < SLIDE_DURATION) {
+        animationFrameId = requestAnimationFrame(updateProgressBar);
+      } else {
+        advanceSlide();
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(updateProgressBar);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [activeImageIndex, isAutoRolling, advanceSlide]);
+
+  const handleThumbnailClick = (index: number) => {
+    // Immediately stop auto-rolling and set new index
+    setIsAutoRolling(false);
+    setActiveImageIndex(index);
+    setProgressBarLength(0);
+  };
 
   return (
     <div className="border-t-[0.5px] border-white/30">
@@ -55,14 +106,19 @@ const HeroSection = () => {
           <div className="h-1/3 bg-gradient-to-b from-transparent via-black to-black relative z-10 py-11">
             <div className="flex justify-center left-0 gap-6">
               {movies.map((movie, index) => (
-                <div
-                  onClick={() => setActiveImageIndex(index)}
-                  key={movie.title}
-                  className={`h-32 aspect-video transition-all duration-300 cursor-pointer border-2 ${
-                    activeImageIndex === index ? 'scale-110 border-white' : 'scale-100 border-transparent'
-                  }`}
-                >
-                  <img src={movie.thumbnail} alt={movie.title} className="h-full w-full object-cover" />
+                <div className="flex flex-col" key={movie.title} onClick={() => handleThumbnailClick(index)}>
+                  <div
+                    className={`h-32 aspect-video transition-all duration-300 cursor-pointer border-2 ${
+                      activeImageIndex === index ? 'scale-110 border-white' : 'scale-100 border-transparent'
+                    }`}
+                  >
+                    <img src={movie.thumbnail} alt={movie.title} className="h-full w-full object-cover" />
+                  </div>
+                  {activeImageIndex === index && isAutoRolling && (
+                    <div className="w-full max-w-[33%] mx-auto h-1 bg-white/30 mt-3 relative">
+                      <span className="h-full bg-white/90 absolute" style={{ width: progressBarLength + '%' }}></span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
