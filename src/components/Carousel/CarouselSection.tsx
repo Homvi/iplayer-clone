@@ -6,16 +6,23 @@ const CarouselSection = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [translateX, setTranslateX] = useState(0);
   const moviesPerPage = 4;
+  const [indexOfVisibleMovies, setIndexOfVisibleMovies] = useState<number[]>([0, 1, 2, 3]);
+
+  /* TODO: darken uncentralised images */
+  /* TODO: Add hover effect */
 
   const handleNextSlide = () => {
     // Calculate the total number of possible slides
     const totalSlides = Math.ceil(movies.length / moviesPerPage);
-
+    const newIndexOfVisibleMovies = indexOfVisibleMovies.map((index) => index + 4);
+    setIndexOfVisibleMovies(newIndexOfVisibleMovies);
     // Increment translation, but don't go beyond the last slide
     setTranslateX((prev) => Math.min(prev + 100, (totalSlides - 1) * 100));
   };
 
   const handlePrevSlide = () => {
+    const newIndexOfVisibleMovies = indexOfVisibleMovies.map((index) => index - 4);
+    setIndexOfVisibleMovies(newIndexOfVisibleMovies);
     // Decrement translation, but don't go below the first slide
     setTranslateX((prev) => Math.max(prev - 100, 0));
   };
@@ -84,16 +91,23 @@ const CarouselSection = () => {
       </div>
       {/*   slider  */}
       <div
-        className="max-w-7xl flex my-6 mx-auto px-3 relative ransition-transform duration-500 ease-in-out"
+        className="max-w-7xl opacity-100 flex my-6 mx-auto relative transition-transform duration-500 ease-in-out"
         style={{
           transform: `translateX(-${translateX}%)`,
           width: `${(movies.length / moviesPerPage) * 100}%`
         }}
       >
         {/* movies */}
-        {movies.map((movie) => (
-          <div key={movie.id} className="max-w-[25%] flex-none">
-            <img src={`${movieImageBaseUrl}${movie.poster_path}`} alt={movie.title} className="movie-poster p-1" />
+        {movies.map((movie, index) => (
+          <div
+            key={movie.id}
+            className={`max-w-[25%] flex-none p-1 transition-opacity duration-300 ${
+              indexOfVisibleMovies.some((indexOfVisibleMovie) => index === indexOfVisibleMovie)
+                ? 'opacity-100'
+                : 'opacity-20'
+            }`}
+          >
+            <img src={`${movieImageBaseUrl}${movie.poster_path}`} alt={movie.title} className="movie-poster" />
             <h3 className="font-semibold mt-2">{movie.title}</h3>
           </div>
         ))}
