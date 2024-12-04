@@ -88,7 +88,7 @@ const CarouselSection = () => {
         </div>
         {/*   slider  */}
         <div
-          className="max-w-7xl opacity-100 z-0  flex my-6 relative mx-auto transition-transform duration-500 ease-in-out"
+          className="max-w-7xl opacity-100 z-0 mb-11 flex my-6 relative mx-auto transition-transform duration-500 ease-in-out"
           style={{
             transform: `translateX(-${translateX}%)`,
             width: `${(movies.length / moviesPerPage) * 100}%`
