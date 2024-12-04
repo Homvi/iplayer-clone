@@ -2,8 +2,7 @@
 import { Film, Popcorn } from 'lucide-react';
 import { movies } from './movieData';
 import { useCallback, useEffect, useState } from 'react';
-
-const SLIDE_DURATION = 8000; // 8 seconds
+import { SLIDE_DURATION } from '../../config';
 
 const HeroSection = () => {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
@@ -52,7 +51,6 @@ const HeroSection = () => {
   }, [activeImageIndex, isAutoRolling, advanceSlide]);
 
   const handleThumbnailClick = (index: number) => {
-    // Immediately stop auto-rolling and set new index
     setIsAutoRolling(false);
     setActiveImageIndex(index);
     setProgressBarLength(0);
@@ -109,7 +107,9 @@ const HeroSection = () => {
                 <div className="flex flex-col" key={movie.title} onClick={() => handleThumbnailClick(index)}>
                   <div
                     className={`h-32 aspect-video transition-all duration-300 cursor-pointer border-2 ${
-                      activeImageIndex === index ? 'scale-110 border-white opacity-100' : 'scale-100 border-transparent opacity-60'
+                      activeImageIndex === index
+                        ? 'scale-110 border-white opacity-100'
+                        : 'scale-100 border-transparent opacity-60'
                     }`}
                   >
                     <img src={movie.thumbnail} alt={movie.title} className="h-full w-full object-cover" />
