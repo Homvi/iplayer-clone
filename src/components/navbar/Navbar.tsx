@@ -194,6 +194,7 @@ const Navbar = () => {
       </div>
       <div className=" border-t-[0.5px] border-white/20">
         <div className="max-w-7xl mx-auto py-6 flex justify-between items-center px-3">
+          {/*  TODO: bugfix: the logo should be rendered as pink  */}
           <IPlayerLogo className="fill-pink-500 h-7 hover:fill-white transition-colors duration-300 cursor-pointer " />
           <ul className="flex gap-6">
             <li className="cursor-pointer hover:text-pink-500 text-white transition-colors duration-300">Channels</li>
